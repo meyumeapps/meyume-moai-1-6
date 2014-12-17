@@ -2,3 +2,5 @@ cmake/build-android-armeabi-v7a
 cmake/build-android-armeabi
 cmake/build-android-x86
 lib/android
+cmake/build-ios
+lib/ios
