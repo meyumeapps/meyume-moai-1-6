@@ -3,7 +3,9 @@ project ( moai-android )
 
 set ( MOAI_ANDROID_MODULES "" )
 
-add_subdirectory(moai-android-twitter)
+#add_subdirectory(moai-android-twitter)
+
+add_subdirectory(mym-android)
 
 
 set ( MOAI_ANDROID_INCLUDES 

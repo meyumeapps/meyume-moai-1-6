@@ -12,7 +12,7 @@ MOAI_JNI_MODULES :=
 
 include $(MOAI_ANDROID_MODULES)
 
-MOAI_STATIC_LIBRARIES := moai-android-twitter
+MOAI_STATIC_LIBRARIES := mym-android
 
 
 include $(CLEAR_VARS)

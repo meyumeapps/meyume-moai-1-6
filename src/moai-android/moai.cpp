@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include <host-modules/aku_modules.h>
+#include <host-modules/aku_plugins.h>
 
 #include <moai-android/moaiext-android.h>
 #include <moai-android/moaiext-jni.h>
@@ -307,6 +308,8 @@
 			REGISTER_LUA_CLASS ( MOAIGooglePlayServicesAndroid );
 		#endif
 		*/
+		
+		AKUPluginsContextInitialize();
 
 		inputQueue = new LockingQueue < InputEvent > ();
 	}

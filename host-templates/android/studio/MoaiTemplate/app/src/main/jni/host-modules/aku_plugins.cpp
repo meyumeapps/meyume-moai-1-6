@@ -9,7 +9,7 @@
 // without having to copy and change the source of the host itself.
 
 //@AKU_PLUGINS_HEADERS@
-#include <moai-android-twitter/host.h>
+#include <mym-android/host.h>
 
 //================================================================//
 // implementation
@@ -32,7 +32,7 @@ void AKUPluginsContextInitialize () {
 
 	//@AKU_PLUGINS_CONTEXT_INITIALIZE@ 
 	
-	AKUAndroidTwitterContextInitialize();
+	AKUMYMAndroidContextInitialize();
 	
 }
 
