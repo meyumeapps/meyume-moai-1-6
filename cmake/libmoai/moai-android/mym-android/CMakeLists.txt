@@ -35,3 +35,4 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/jni/host-jni.cpp DESTINATION ../module
 #third-party
 install(DIRECTORY ${MOAI_ROOT}/3rdparty-android-mym/chartsboot-5.1.0/ DESTINATION ../modules/external/mym-android)
 install(DIRECTORY ${MOAI_ROOT}/3rdparty-android-mym/amazon-iap-2.0.1/ DESTINATION ../modules/external/mym-android)
+install(DIRECTORY ${MOAI_ROOT}/3rdparty-android-mym/twitter4j-4.0.1/ DESTINATION ../modules/external/mym-android)
