@@ -10,6 +10,9 @@
 #include <mym-android/MYMMOAIAmazonAnalytics.h>
 #include <mym-android/MYMMOAIAmazonGameCircle.h>
 #include <mym-android/MYMMOAIAmazonIAP.h>
+#include <mym-android/MYMMOAIGooglePlayServices.h>
+#include <mym-android/MYMMOAIGooglePlayApkExtension.h>
+#include <mym-android/MYMMOAIGoogleBillingAndroid.h>
 
 //================================================================//
 // aku
@@ -49,5 +52,14 @@ void AKUMYMAndroidContextInitialize () {
 	
 	MYMMOAIAmazonIAP::Affirm ();
 	REGISTER_LUA_CLASS ( MYMMOAIAmazonIAP );
+	
+	MYMMOAIGooglePlayServices::Affirm ();
+	REGISTER_LUA_CLASS ( MYMMOAIGooglePlayServices );
+	
+	MYMMOAIGooglePlayApkExtension::Affirm ();
+	REGISTER_LUA_CLASS ( MYMMOAIGooglePlayApkExtension );
+	
+	MYMMOAIGoogleBillingAndroid::Affirm ();
+	REGISTER_LUA_CLASS ( MYMMOAIGoogleBillingAndroid );
 	
 }

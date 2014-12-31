@@ -75,10 +75,10 @@ int MYMMOAIAudioAndroid::_enablePlaySoundInstantly(lua_State* L) {
 
 int MYMMOAIAudioAndroid::_loadSound(lua_State* L) {
 	MOAILuaState state(L);
-	ZLLog::LogF ( ZLLog::CONSOLE, "in load sound");
+	
 	cc8* name = lua_tostring(state, 1);
 	bool fromAssets = lua_toboolean(state, 2);
-	ZLLog::LogF ( ZLLog::CONSOLE, "load: %s", name);
+	
 	JNI_GET_ENV (jvm, env);
 	
 	JNI_GET_JSTRING (name, jname);
@@ -92,9 +92,8 @@ int MYMMOAIAudioAndroid::_loadSound(lua_State* L) {
 			ZLLog::LogF ( ZLLog::CONSOLE, "MYMMOAIAudioAndroid: Unable to find static java method %s", "loadSound");
 		} else {
 			int ret = env->CallStaticIntMethod(audioHandler, loadSound, jname, fromAssets);
-			ZLLog::LogF ( ZLLog::CONSOLE, "load sound ret: %d", ret);
 			lua_pushinteger(state, ret);
-			ZLLog::LogF ( ZLLog::CONSOLE, "will return.");
+			
 			return 1;
 		}
 	}
