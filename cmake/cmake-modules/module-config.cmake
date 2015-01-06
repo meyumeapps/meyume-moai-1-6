@@ -6,9 +6,10 @@ set (MOAI_VERSION_REVISION FALSE)
 
 option ( MOAI_BOX2D		"Enable Box2D physics"		    TRUE  )
 
-option ( MOAI_CHIPMUNK	"Enable Chipmunk physics"       TRUE)
+
 option ( MOAI_CURL      "Enable Curl"                 	TRUE )
-option ( MOAI_CRYPTO    "Enable Crypto Lib"             TRUE )
+option ( MOAI_LIBCRYPTO    "Enable Crypto Lib"             TRUE )
+option ( MOAI_CRYPTO    "Enable Moai Crypto classes"      TRUE )
 option ( MOAI_EXPAT     "Enable Expat"                  TRUE )
 option ( MOAI_FREETYPE  "Enable Freetype"               TRUE  )
 option ( MOAI_JSON      "Enable Json"                   TRUE )

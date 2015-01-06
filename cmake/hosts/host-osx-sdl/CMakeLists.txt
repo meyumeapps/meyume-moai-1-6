@@ -8,7 +8,7 @@ set (MOAI_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../..")
 
   find_library ( APPLICATION_SERVICES_LIBRARY ApplicationServices )
   find_library ( CORE_SERVICES_LIBRARY CoreServices )
-  find_package ( OpenGL REQUIRED )
+  
 
 if (LIB_PATH)
   get_filename_component(LIB_PATH ${LIB_PATH} ABSOLUTE)
@@ -26,6 +26,7 @@ include(../../cmake-modules/platform-osx.cmake)
 include(../../cmake-modules/platform-common.cmake)
 include(../../cmake-modules/module-setup.cmake)
 include(../../cmake-modules/libmoai-setup.cmake)
+install(EXPORT libmoai DESTINATION cmake )
 
 
 add_subdirectory(../host-modules host-modules)
@@ -39,6 +40,8 @@ endif (NOT LIB_PATH)
 
 # Use all cpp files in directory as source code
 file ( GLOB HOST_SDL_SRC "${HOST_ROOT}/host-sdl/*.cpp" "${HOST_ROOT}/host-sdl/*.h" )
+
+find_package ( OpenGL REQUIRED )
 
 add_executable ( moai ${HOST_SDL_SRC} )
 install(TARGETS moai DESTINATION bin)

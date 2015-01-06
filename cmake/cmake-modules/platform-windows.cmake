@@ -1,4 +1,4 @@
- find_package ( OpenGL REQUIRED )
+# find_package ( OpenGL REQUIRED )
 if (MSVC)
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_CRT_SECURE_NO_WARNINGS /MP")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_CRT_SECURE_NO_WARNINGS /MP")

@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIImage.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
-//#if MOAI_WITH_LIBWEBP
+#if MOAI_WITH_LIBWEBP
 
 extern "C" {
 	#include "libwebp-0.4.1/src/webp/demux.h"
@@ -64,7 +64,7 @@ void MOAIImage::LoadWebP ( u8 const* data, size_t dataSize, int width, int heigh
 	}
 
 	// Set pixel and color format
-	this->mPixelFormat = ZLPixel::TRUECOLOR;
+	this->mPixelFormat = TRUECOLOR;
 	bool quantize = (transform & MOAIImageTransform::QUANTIZE) != 0;
 	if ( hasAlpha ) {
 		this->mColorFormat = quantize ? ZLColor::RGBA_4444 : ZLColor::RGBA_8888;
@@ -97,7 +97,7 @@ void MOAIImage::LoadWebP ( u8 const* data, size_t dataSize, int width, int heigh
 		config.output.colorspace = MODE_RGB_565;
 		break;
 	}
-	config.output.u.RGBA.rgba = ( u8* ) this->mData;
+	config.output.u.RGBA.rgba = ( u8* )this->mBitmap;
 	config.output.u.RGBA.stride = this->GetRowSize ();
 	config.output.u.RGBA.size = this->GetBitmapSize ();
 	config.output.is_external_memory = true;
@@ -109,4 +109,4 @@ void MOAIImage::LoadWebP ( u8 const* data, size_t dataSize, int width, int heigh
 	WebPFreeDecBuffer ( &config.output );
 }
 
-//#endif
+#endif

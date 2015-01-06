@@ -19,19 +19,34 @@ mkdir -p $libprefix
 libprefix=$(cd $libprefix; pwd)
 
 cd `dirname $0`/..
-cd cmake
 
+
+
+moai_root=$(pwd)
+
+
+if ! [ -d "build" ]
+then
 mkdir build
+fi
 cd build
+
+if ! [ -d "build-osx" ]
+then
+mkdir build-osx
+fi
+cd build-osx
+
+set -e
 cmake -G "Xcode" \
 -DBUILD_OSX=TRUE \
 -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_INSTALL_PREFIX=$libprefix \
-../hosts/host-osx-sdl
+$moai_root/cmake/hosts/host-osx-sdl
 
 cmake --build . --target install --config Release
 
-if [ ! -e "../../util/moai" ]; then
-   cp $libprefix/bin/moai ../../util/moai
+if [ ! -e "$moai_root/util/moai" ]; then
+   cp $libprefix/bin/moai $moai_root/util/moai
 fi
 

@@ -2,8 +2,7 @@
 
 Thanks for checking out the Moai source code. Here's the scoop.
 
-Linux CI: [![Build Status](https://travis-ci.org/moaiforge/moai-sdk.png?branch=master)](https://travis-ci.org/moaiforge/moai-sdk)
-OSX CI: [![Build Status](https://travis-ci.org/moaiforge/moai-sdk.png?branch=travis-osx)](https://travis-ci.org/moaiforge/moai-sdk)
+
 ## Introduction
 
 Moai SDK is an open source game framework for quickly developing great mobile games.
@@ -22,11 +21,13 @@ Please clone the source in the following way.
 Tools needed to build the MOAI SDK.
 
 * [Android SDK](http://developer.android.com/sdk/index.html)
-* [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (32bit Only, r8e or earlier)
-   * windows: http://dl.google.com/android/ndk/android-ndk-r8e-windows-x86.zip
-   * linux: http://dl.google.com/android/ndk/android-ndk-r8e-linux-x86_64.tar.bz2
-   * osx: http://dl.google.com/android/ndk/android-ndk-r8e-darwin-x86_64.tar.bz2	 
-* [Java SE 6](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+
+* [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (32bit Only, r9d )
+   * Windows: https://dl.google.com/android/ndk/android-ndk-r9d-windows-x86.zip
+   * Mac: https://dl.google.com/android/ndk/android-ndk-r9d-darwin-x86_64.tar.bz2
+   * Linux: https://dl.google.com/android/ndk/android-ndk-r9d-linux-x86_64.tar.bz2
+  
+* [Oracle JDK 1.7](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [Ant 1.9](http://ant.apache.org/)
 * [CMake 2.8.11](http://www.cmake.org/)
 * [Ruby 1.9](http://www.ruby-lang.org/)

@@ -41,18 +41,6 @@ int MOAIImageTexture::_updateRegion ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIImageTexture::IsRenewable () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIImageTexture::IsValid () {
-
-	return ( this->mGLTexID && ( this->mStatus == VALID ));
-}
-
-//----------------------------------------------------------------//
 MOAIImageTexture::MOAIImageTexture () :
 	mStatus ( INVALID ) {
 	
@@ -60,8 +48,6 @@ MOAIImageTexture::MOAIImageTexture () :
 		RTTI_EXTEND ( MOAITextureBase )
 		RTTI_EXTEND ( MOAIImage )
 	RTTI_END
-	
-	this->MOAIGfxResource::Load ();
 }
 
 //----------------------------------------------------------------//
@@ -69,34 +55,29 @@ MOAIImageTexture::~MOAIImageTexture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::OnBind () {
+void MOAIImageTexture::OnGPUBind () {
 
 	if ( this->mStatus == INVALID ) {
 		this->UpdateTextureFromImage ( *this, this->mRegion );
+		this->mStatus = VALID;
 	}
-	MOAITextureBase::OnBind ();
+	MOAITextureBase::OnGPUBind ();
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::OnClear () {
+bool MOAIImageTexture::OnGPUCreate () {
 
-	this->MOAIImage::Clear ();
-	MOAITextureBase::OnClear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::OnCreate () {
-
-	if ( !this->IsOK ()) return;
-	
-	if ( !this->mGLTexID ) {
-		this->CreateTextureFromImage ( *this );
-	}
+	if ( !this->IsOK ()) return false;
 	this->mStatus = VALID;
+	return this->CreateTextureFromImage ( *this );
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::OnLoad () {
+void MOAIImageTexture::OnImageStatusChanged	( bool isOK ) {
+
+	if ( isOK ) {
+		this->DoCPUAffirm ();
+	}
 }
 
 //----------------------------------------------------------------//

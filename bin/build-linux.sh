@@ -19,17 +19,32 @@ mkdir -p $libprefix
 libprefix=$(cd $libprefix; pwd)
 
 cd `dirname $0`/..
-cd cmake
+
+moai_root=$(pwd)
+
+
+if ! [ -d "build" ]
+then
 mkdir build
+fi
 cd build
+
+if ! [ -d "build-linux" ]
+then
+mkdir build-linux
+fi
+cd build-linux
+
+
+set -e
 cmake \
 -DBUILD_LINUX=TRUE \
 -DCMAKE_BUILD_TYPE=Release \
 -DCMAKE_INSTALL_PREFIX=$libprefix \
-../hosts/host-linux-sdl
+$moai_root/cmake/hosts/host-linux-sdl
 
 cmake --build . --target install
 
-if [ ! -e "../../util/moai" ]; then
-   cp $libprefix/bin/moai ../../util/moai
+if [ ! -e "$moai_root/util/moai" ]; then
+   cp $libprefix/bin/moai $moai_root/util/moai
 fi

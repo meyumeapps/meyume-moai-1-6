@@ -1,2 +1,2 @@
-MOAIFileSystem.setWorkingDirectory("font-ttf")
+MOAIFileSystem.setWorkingDirectory("anim-basic")
 dofile("main.lua")

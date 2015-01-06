@@ -343,10 +343,7 @@ void AKULoadFuncFromBuffer ( void* data, size_t size, int dataType, int compress
 	}
 	
 	if ( dataType == AKU_DATA_STRING ) {
-		int status = luaL_loadstring ( state, ( cc8* )data );
-		if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
-			sContext->mLuaFunc.SetRef ( state, -1 );
-		}
+		AKULoadFuncFromString (( cc8* )data );
 	}
 	
 	buffer.Unlock ();
@@ -363,9 +360,25 @@ void AKULoadFuncFromFile ( const char* filename ) {
 	}
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	int status = luaL_loadfile ( state, filename );
+	
+	//int top = state.GetTop ();
+	
+	lua_getglobal ( state, "loadfile" );
+	if ( !state.IsType ( -1, LUA_TFUNCTION )) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "Missing global Lua function 'loadfile'\n" );
+	}
+	
+	state.Push ( filename );
+	
+	int status = state.DebugCall ( 1, 2 );
 	if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
-		sContext->mLuaFunc.SetRef ( state, -1 );
+		if ( state.IsNil ( -2 )) {
+			cc8* msg = state.GetValue < cc8* >( -1, "loafile returned 'nil'" );
+			printf ( "%s\n", msg );
+		}
+		else {
+			sContext->mLuaFunc.SetRef ( state, -2 );
+		}
 	}
 }
 
@@ -376,8 +389,14 @@ void AKULoadFuncFromString ( const char* script ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
-	int status = luaL_loadstring (
-	state, script );
+	lua_getglobal ( state, "loadstring" );
+	if ( !state.IsType ( -1, LUA_TFUNCTION )) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "Missing global Lua function 'loadstring'\n" );
+	}
+	
+	state.Push ( script );
+	
+	int status = state.DebugCall ( 1, 1 );
 	if ( !state.PrintErrors ( ZLLog::CONSOLE, status )) {
 		sContext->mLuaFunc.SetRef ( state, -1 );
 	}

@@ -61,23 +61,27 @@ protected:
 	bool				mIsDirty;
 
 	//----------------------------------------------------------------//
-	static int		_getSize				( lua_State* L );
-	static int		_release				( lua_State* L );
-	static int		_setFilter				( lua_State* L );
-	static int		_setWrap				( lua_State* L );
+	static int			_getSize				( lua_State* L );
+	static int			_release				( lua_State* L );
+	static int			_setFilter				( lua_State* L );
+	static int			_setWrap				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			CreateTextureFromImage	( MOAIImage& image );
-	void			CreateTextureFromPVR	( void* data, size_t size );
-	bool			GenerateMipmaps			();
-	bool			IsRenewable				();
-	void			OnBind					();
-	void			OnClear					();
-	void			OnDestroy				();
-	void			OnInvalidate			();
-	void			OnUnbind				();
-	void			ReleaseLoader			();
-	void			UpdateTextureFromImage	( MOAIImage& image, ZLIntRect rect );
+	void				CleanupOnError			();
+	
+	bool				CreateTextureFromImage	( MOAIImage& srcImage );
+	bool				CreateTextureFromPVR	( void* data, size_t size );
+
+	bool				OnCPUCreate				();
+	void				OnCPUDestroy			();
+	void				OnGPUBind				();
+	void				OnGPUDestroy			();
+	void				OnGPULost				();
+	void				OnGPUUnbind				();
+	
+	bool				ShouldGenerateMipmaps	();
+	
+	void				UpdateTextureFromImage	( MOAIImage& image, ZLIntRect rect );
 
 public:
 	

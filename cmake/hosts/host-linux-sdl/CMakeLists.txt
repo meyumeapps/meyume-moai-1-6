@@ -25,9 +25,12 @@ include(../../cmake-modules/platform-linux.cmake)
 include(../../cmake-modules/platform-common.cmake)
 include(../../cmake-modules/module-setup.cmake)
 include(../../cmake-modules/libmoai-setup.cmake)
-
+install(EXPORT libmoai DESTINATION cmake )
 
 add_subdirectory(../host-modules host-modules)
+
+
+find_package ( OpenGL REQUIRED )
 
 include_directories ( ${OPENGL_INCLUDE_DIRS} ${HOST_ROOT} )
 
@@ -52,6 +55,12 @@ target_link_libraries ( moai
   pthread 
   rt
   Xi
+  ${OPENGL_LIBRARIES}
+  Xxf86vm
+  xcb
+  xcb-randr
+  xcb-util
+  
 )
 
 

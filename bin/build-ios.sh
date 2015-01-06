@@ -59,8 +59,15 @@ echo "Building lib moai via CMAKE"
 build_dir=${PWD}
 
 cd `dirname $0`/..
-cd cmake
-#rm -rf build
+
+moai_root=$(pwd)
+
+if ! [ -d "build" ]
+then
+mkdir build
+fi
+cd build
+
 if ! [ -d "build-ios" ]
 then
 mkdir build-ios
@@ -81,7 +88,7 @@ cmake \
 -DMOAI_LUAJIT=False \
 -DCMAKE_INSTALL_PREFIX="${lib_dir}" \
 -G "Xcode" \
-../
+$moai_root/cmake
 #fi
 
 rm -f ${lib_dir}/lib/*.a

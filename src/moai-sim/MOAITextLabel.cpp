@@ -13,6 +13,7 @@
 #include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIShaderMgr.h>
+#include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextDesigner.h>
 #include <moai-sim/MOAITextLabel.h>
 #include <moai-sim/MOAITextStyle.h>
@@ -89,7 +90,7 @@ int MOAITextLabel::_getLineSpacing ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	getRect
-	@text	Returns the two-dimensional boundary of the text box.
+	@text	Returns the two-dimensional boundary of the text box (if any).
 
 	@in		MOAITextLabel self
 	@out	number xMin
@@ -157,11 +158,13 @@ int MOAITextLabel::_getText ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@lua	getTextBounds
 	@text	Returns the bounding rectange of a given substring on a
-			single line in the local space of the text box.
+			single line in the local space of the text box. If 'index' and
+			'size' are not passed, the bounds for all visible text will be
+			returned.
 
 	@in		MOAITextLabel self
-	@in		number index		Index of the first character in the substring.
-	@in		number size			Length of the substring.
+	@opt	number index		Index of the first character in the substring.
+	@opt	number size			Length of the substring.
 	@out	number xMin			Edge of rect or 'nil' is no match found.
 	@out	number yMin			Edge of rect or 'nil' is no match found.
 	@out	number xMax			Edge of rect or 'nil' is no match found.
@@ -291,6 +294,32 @@ int MOAITextLabel::_setAutoFlip ( lua_State* L ) {
 	self->mAutoFlip = state.GetValue < bool >( 2, false );
 	self->ScheduleLayout ();
 
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITextLabel::_setBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+
+	if ( state.CheckParams ( 2, "NNNNNN", false )) {
+
+		ZLBox bounds = state.GetBox ( 2 );
+		bounds.Bless ();
+		
+		ZLRect frame;
+		frame = bounds.GetRect ( ZLBox::PLANE_XY );
+		
+		self->mDesigner.SetFrame ( frame );
+		self->mDesigner.SetLimitWidth ( true );
+		self->mDesigner.SetLimitHeight ( true );
+	}
+	else {
+		self->mDesigner.SetLimitWidth ( false );
+		self->mDesigner.SetLimitHeight ( false );
+	}
+	
+	self->ScheduleLayout ();
 	return 0;
 }
 
@@ -624,7 +653,7 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 	self->mReveal = state.GetValue < u32 >( 2, 0 );
 	self->mSpool = ( float )self->mReveal;
 
-	self->Start ();
+	self->Start ( MOAISim::Get ().GetActionMgr ());
 
 	return 1;
 }
@@ -725,6 +754,8 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 	UNUSED ( lod );
+
+	MOAIGraphicsProp::DrawDebug ( subPrimID, lod );
 
 	if ( !this->IsVisible ( lod )) return;
 	if ( this->IsClear ()) return;
@@ -879,16 +910,44 @@ void MOAITextLabel::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
 
-	ZLRect frame;
-	if ( this->mLayout.GetBounds ( frame )) {
-		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+	this->Refresh ();
+
+	ZLRect textBounds; // the tight fitting bounds of the text (if any: may be empty)
+	bool hasBounds = this->mLayout.GetBounds ( textBounds );
+	
+	ZLRect textFrame = this->mDesigner.GetFrame ();
+	bool limitWidth = this->mDesigner.GetLimitWidth ();
+	bool limitHeight = this->mDesigner.GetLimitHeight ();
+	
+	if ( hasBounds ) {
+	
+		if ( limitWidth ) {
+			textBounds.mXMin = textFrame.mXMin;
+			textBounds.mXMax = textFrame.mXMax;
+		}
+		
+		if ( limitHeight ) {
+			textBounds.mYMin = textFrame.mYMin;
+			textBounds.mYMax = textFrame.mYMax;
+		}
+	
+		bounds.Init ( textBounds.mXMin, textBounds.mYMax, textBounds.mXMax, textBounds.mYMin, 0.0f, 0.0f );
 		return MOAIProp::BOUNDS_OK;
 	}
+	else {
+	
+		// if the text bounds are empty, then *both* frame axis must be in use for the rect to be valid
+		if ( limitWidth && limitWidth ) {
+			bounds.Init ( textFrame.mXMin, textFrame.mYMax, textFrame.mXMax, textFrame.mYMin, 0.0f, 0.0f );
+			return MOAIProp::BOUNDS_OK;
+		}
+	}
+	
 	return MOAIProp::BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::OnUpdate ( float step ) {
+void MOAITextLabel::OnUpdate ( double step ) {
 	
 	this->mSpool += ( this->mSpeed * step );
 	this->mReveal = ( u32 )this->mSpool;
@@ -964,6 +1023,7 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "revealAll",				_revealAll },
 		{ "setAlignment",			_setAlignment },
 		{ "setAutoFlip",			_setAutoFlip },
+		{ "setBounds",				_setBounds },
 		{ "setCurve",				_setCurve },
 		{ "setGlyphScale",			_setGlyphScale },
 		{ "setLineSnap",			_setLineSnap },

@@ -2,7 +2,7 @@ CONFIG_NAME = 'MOAI_MODULES'
 
 SETTINGS = {
 	MY_ARM_MODE = 'arm',
-	MY_ARM_ARCH = 'armeabi-v7a',
+	MY_ARM_ARCH = 'armeabi-v7a x86',
 	MY_APP_PLATFORM = 'android-10',
 }
 
@@ -33,31 +33,15 @@ MODULES = {
 	},
 	
 	----------------------------------------------------------------
-	CHIPMUNK = {
-		
-		MODULE_DEFINE = 'AKU_WITH_CHIPMUNK',
-		
-		HEADER_SEARCH_PATHS = {
-			'$(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include',
-			'$(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include/chipmunk',
-			'$(MOAI_SDK_HOME)/3rdparty/chipmunk-5.3.4/include/chipmunk/constraints',
-		},
-	
-		INCLUDES = {
-			'$(MOAI_SDK_HOME)/ant/libmoai/modules/3rdparty-chipmunk.mk',
-			'$(MOAI_SDK_HOME)/ant/libmoai/modules/moai-chipmunk.mk',
-		},
-		
-		STATIC_LIBRARIES = 'libchipmunk libmoai-chipmunk',
-	},
-	
-	----------------------------------------------------------------
 	CRYPTO = {
 		
 		MODULE_DEFINE = 'AKU_WITH_CRYPTO',
 		
 		HEADER_SEARCH_PATHS = {
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0d/include-android'
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android',
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include',
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m',
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/crypto',
 		},
 		
 		INCLUDES = {
@@ -99,7 +83,8 @@ MODULES = {
 			'$(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5',
 			'$(MOAI_SDK_HOME)/3rdparty/c-ares-1.7.5/include-android',
 			'$(MOAI_SDK_HOME)/3rdparty/curl-7.19.7/include-android',
-			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0d/include-android',
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include-android',
+			'$(MOAI_SDK_HOME)/3rdparty/openssl-1.0.0m/include',
 		},
 		
 		INCLUDES = {
@@ -235,7 +220,6 @@ EXTERNAL_LIBRARIES = {
 STATIC_LIBRARIES = {
 
 	-- moai
-	'libmoai-chipmunk',
 	'libmoai-box2d',
 	'libmoai-http-client',
 	'libmoai-fmod-ex',
@@ -253,7 +237,6 @@ STATIC_LIBRARIES = {
 	
 	-- 3rd party
 	'libbox2d',
-	'libchipmunk',
 	
 	'libuntz',
 	'libvorbis',

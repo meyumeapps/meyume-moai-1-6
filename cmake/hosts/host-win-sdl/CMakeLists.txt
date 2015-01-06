@@ -27,7 +27,7 @@ include(libmoai-setup)
 
 add_subdirectory(../host-modules host-modules)
 
-
+find_package ( OpenGL REQUIRED )
 include_directories ( ${OPENGL_INCLUDE_DIRS} ${HOST_ROOT} )
 
 #fix lua lib path

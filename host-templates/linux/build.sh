@@ -21,7 +21,7 @@ cmake -DBUILD_LINUX=TRUE \
       -DCMAKE_BUILD_TYPE=Release \
       $cmakedir
 
-cmake --build . --target moai
+cmake --build . --target moai --config Release
 
 cd ..
 mkdir debug
@@ -31,6 +31,6 @@ cmake -DBUILD_LINUX=TRUE \
       -DCMAKE_BUILD_TYPE=Debug \
       $cmakedir
 
-cmake --build . --target moai
+cmake --build . --target moai --config Debug
 
 popd

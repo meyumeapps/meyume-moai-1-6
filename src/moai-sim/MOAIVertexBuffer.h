@@ -45,7 +45,6 @@ private:
 	u32							mHint;
 	
 	bool						mIsDirty;
-	bool						mIsValid;
 	bool						mUseVBOs;
 	
 	//----------------------------------------------------------------//
@@ -59,16 +58,15 @@ private:
 	static int		_writeColor32			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			IsRenewable				();
-	bool			IsValid					();
-	void			OnBind					();
-	void			OnClear					();
-	void			OnCreate				();
-	void			OnDestroy				();
-	void			OnInvalidate			();
-	void			OnLoad					();
-	void			OnUnbind				();
-
+	u32				GetLoadingPolicy		();
+	bool			OnCPUCreate				();
+	void			OnCPUDestroy			();
+	void			OnGPUBind				();
+	bool			OnGPUCreate				();
+	void			OnGPUDestroy			();
+	void			OnGPULost				();
+	void			OnGPUUnbind				();
+	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIVertexBuffer )

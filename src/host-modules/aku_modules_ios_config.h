@@ -14,15 +14,15 @@
 	#endif
 
 	#ifndef AKU_WITH_IOS_CHARTBOOST
-		#define AKU_WITH_IOS_CHARTBOOST 1
+		#define AKU_WITH_IOS_CHARTBOOST 0
 	#endif
 
 	#ifndef AKU_WITH_IOS_CRITTERCISM
-		#define AKU_WITH_IOS_CRITTERCISM 1
+		#define AKU_WITH_IOS_CRITTERCISM 0
 	#endif
 
 	#ifndef AKU_WITH_IOS_FACEBOOK
-		#define AKU_WITH_IOS_FACEBOOK 1
+		#define AKU_WITH_IOS_FACEBOOK 0
 	#endif
 
 	#ifndef AKU_WITH_IOS_FLURRY
@@ -30,7 +30,7 @@
 	#endif
 
 	#ifndef AKU_WITH_IOS_GAMECENTER
-		#define AKU_WITH_IOS_GAMECENTER 1
+		#define AKU_WITH_IOS_GAMECENTER 0
 	#endif
 
 	#ifndef AKU_WITH_IOS_MIXPANEL
@@ -42,7 +42,7 @@
 	#endif
 
 	#ifndef AKU_WITH_IOS_TAPJOY
-		#define AKU_WITH_IOS_TAPJOY 1
+		#define AKU_WITH_IOS_TAPJOY 0
 	#endif
 
 	#ifndef AKU_WITH_IOS_URBAN_AIRSHIP
@@ -50,7 +50,7 @@
 	#endif
 
 	#ifndef AKU_WITH_IOS_VUNGLE
-		#define AKU_WITH_IOS_VUNGLE 1
+		#define AKU_WITH_IOS_VUNGLE 0
 	#endif
 
 #endif

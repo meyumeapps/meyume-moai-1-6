@@ -185,6 +185,12 @@ LOCAL_SRC_FILES := $(MOAI_LIBS)/libzlcore.a
 include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
+LOCAL_MODULE    := zlcrypto
+LOCAL_SRC_FILES := $(MOAI_LIBS)/libzlcrypto.a
+
+include $(PREBUILT_STATIC_LIBRARY)
+include $(CLEAR_VARS)
+
 LOCAL_MODULE    := zlib 
 LOCAL_SRC_FILES := $(MOAI_LIBS)/libzlib.a
 

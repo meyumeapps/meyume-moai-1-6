@@ -14,11 +14,11 @@
 		<string>https://github.com/moaiforge/moai-sdk</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>host-templates/ios/Moai Template/MoaiTemplate.xcodeproj</string>
+	<string>hosts/ios/MoaiTemplate.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>63C4897045D0EF88507AD257AEF500CB53038CE0</key>
-		<string>../../../../..</string>
+		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/moaiforge/moai-sdk</string>

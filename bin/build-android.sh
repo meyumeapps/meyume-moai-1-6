@@ -11,29 +11,50 @@ if [ x$1 == x ]; then
 else
   libprefix=$1
 fi
-mkdir -p $libprefix
-
-cmakefolder=`dirname $0`/../cmake
-cmakefolder=$(cd $cmakefolder; pwd)
 
 libprefix=$(cd $libprefix; pwd)
+
+mkdir -p $libprefix
+
+cd `dirname $0`/..
+moai_root=$(pwd)
+
+
+if ! [ -d "build" ]
+then
+mkdir build
+fi
+cd build
+
+
+
+
+build_folder=$moai_root/build
+
+
 
 
 for ARCH in armeabi armeabi-v7a x86
 do
 
-  cd $cmakefolder
+  cd $build_folder
+  
+  
+  if ! [ -d "build-android-$ARCH" ]
+  then
   mkdir build-android-$ARCH
+  fi
   cd build-android-$ARCH
+
   cmake \
   -DBUILD_ANDROID=TRUE \
-  -DCMAKE_TOOLCHAIN_FILE="../hosts/host-android/android.toolchain.cmake" \
+  -DCMAKE_TOOLCHAIN_FILE="$moai_root/cmake/hosts/host-android/android.toolchain.cmake" \
   -DCMAKE_BUILD_TYPE=Release \
   -DMOAI_LUAJIT=False \
   -DANDROID_ABI=$ARCH \
   -DCMAKE_INSTALL_PREFIX=$libprefix/$ARCH \
   -DLIBRARY_OUTPUT_PATH_ROOT=./build-android-$ARCH/ \
-  ../
+  $moai_root/cmake
 
   cmake --build . --target install
 
