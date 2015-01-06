@@ -28,9 +28,9 @@ if (MOAI_CURL)
   target_link_libraries ( moai-luaext luacurl )
 endif (MOAI_CURL)
 
-if (MOAI_CRYPTO) 
+if (MOAI_LIBCRYPTO) 
   target_link_libraries ( moai-luaext luacrypto )
-endif (MOAI_CRYPTO)
+endif (MOAI_LIBCRYPTO)
 
 if (MOAI_SQLITE3)
   target_link_libraries ( moai-luaext  luasql )

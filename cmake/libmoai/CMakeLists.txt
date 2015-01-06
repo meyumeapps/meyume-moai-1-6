@@ -13,7 +13,6 @@ add_subdirectory ( moai-sim )
 add_subdirectory ( moai-crypto )
 
 add_subdirectory ( moai-box2d )
-add_subdirectory ( moai-chipmunk )
 add_subdirectory ( moai-untz )
 add_subdirectory ( moai-http-client )
 add_subdirectory ( moai-luaext )

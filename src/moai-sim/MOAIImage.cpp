@@ -2167,13 +2167,13 @@ bool MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 		}
 	#endif
 	
-	#if MOAI_WITH_LIBWEBP
+	//#if MOAI_WITH_LIBWEBP
 		if ( MOAIImage::IsWebP ( stream )) {
 			this->LoadWebP ( stream, transform );
 			this->OnImageStatusChanged ( this->IsOK ());
 			return this->IsOK ();
 		}
-	#endif
+	//#endif
 	
 	return false;
 }

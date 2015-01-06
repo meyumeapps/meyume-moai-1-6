@@ -128,11 +128,11 @@ private:
 	#endif
 
 	//----------------------------------------------------------------//
-	#if MOAI_WITH_LIBWEBP
+	//#if MOAI_WITH_LIBWEBP
 		static bool		IsWebP				( ZLStream& stream );
 		void			LoadWebP			( ZLStream& stream, u32 transform );
 		void			LoadWebP			( const u8* data, size_t dataSize, int width, int height, bool hasAlpha, u32 transform );
-	#endif
+	//#endif
 
 public:
 	

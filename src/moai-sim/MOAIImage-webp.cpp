@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIImage.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
-#if MOAI_WITH_LIBWEBP
+//#if MOAI_WITH_LIBWEBP
 
 extern "C" {
 	#include "libwebp-0.4.1/src/webp/demux.h"
@@ -109,4 +109,4 @@ void MOAIImage::LoadWebP ( u8 const* data, size_t dataSize, int width, int heigh
 	WebPFreeDecBuffer ( &config.output );
 }
 
-#endif
+//#endif
