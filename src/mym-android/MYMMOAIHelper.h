@@ -17,6 +17,7 @@ private:
 	static int	_getSharedProp		( lua_State* L );
 	static int	_setSharedProp		( lua_State* L );
 	static int	_setListener 	( lua_State* L );
+	static int	_setAutoRender		( lua_State* L );
 
 public:
 	DECL_LUA_SINGLETON(MYMMOAIHelper);

@@ -142,6 +142,18 @@ private:
 	static int		_setTraceback				( lua_State* L );
 	static int		_showCursor					( lua_State* L );
 	static int		_timeToFrames				( lua_State* L );
+	// Meyume
+	static int		_setIgnoreLoopFlags				( lua_State* L );
+
+	//EZRA
+	double      mDeviceTime;    // elapsed device time since last update
+	double      mTime;          // elapsed simulation running time (in seconds)
+	double      timerStep;           //varible thats is used
+	u32         mFrameCounter;  // Increments every simulation step
+	
+	// Meyume
+	bool mIgnoreLoopFlags;
+	
 
 	//----------------------------------------------------------------//
 	#ifdef DOXYGEN

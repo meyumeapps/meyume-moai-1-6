@@ -97,6 +97,33 @@ int MYMMOAIHelper::_setSharedProp(lua_State* L) {
 	return 0;
 }
 
+int MYMMOAIHelper::_setAutoRender ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	bool val = lua_toboolean ( state, 1 );
+	
+	JNI_GET_ENV ( jvm, env );
+	
+	jclass helper = env->FindClass ( "com/meyume/moai/MYMMoaiHelper" );
+    if ( helper == NULL ) {
+		ZLLog::LogF ( ZLLog::CONSOLE, "MYMMoaiHelper: Unable to find java class %s", "com/meyume/moai/MYMMoaiHelper" );
+    } else {
+
+    	jmethodID setAutoRender = env->GetStaticMethodID ( helper, "setAutoRender", "(Z)V" );
+    	if ( setAutoRender == NULL ) {
+
+			ZLLog::LogF ( ZLLog::CONSOLE, "MYMMoaiHelper: Unable to find static java method %s", "setAutoRender" );
+    	} else {
+
+			env->CallStaticVoidMethod ( helper, setAutoRender, val);
+		}
+	}
+	
+	return 0;
+}
+
+
 int MYMMOAIHelper::_setListener(lua_State* L) {
 	MOAILuaState state(L);
 	
@@ -123,7 +150,8 @@ void MYMMOAIHelper::RegisterLuaClass(MOAILuaState& state) {
 		{ "openURL",				_openURL },
 		{ "getSharedProp",			_getSharedProp },
 		{ "setSharedProp",			_setSharedProp },
-		{ "setListener",	_setListener },
+		{ "setListener",			_setListener },
+		{ "setAutoRender",			_setAutoRender },
 		{NULL, NULL}
 	};
 

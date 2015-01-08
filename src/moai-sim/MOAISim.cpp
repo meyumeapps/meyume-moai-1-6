@@ -130,6 +130,17 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 	return 1;
 }
 
+// Meyume
+int MOAISim::_setIgnoreLoopFlags ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	MOAISim::Get().mIgnoreLoopFlags = state.GetValue < bool >( 1, false );
+	
+	return 0;
+}
+
+
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAISim::_getActionMgr ( lua_State* L ) {
@@ -796,6 +807,9 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setTraceback",				_setTraceback },
 		{ "showCursor",					_showCursor },
 		{ "timeToFrames",				_timeToFrames },
+		// Meyume
+		{ "setIgnoreLoopFlags",			_setIgnoreLoopFlags },
+
 		{ NULL, NULL }
 	};
 
@@ -907,6 +921,64 @@ void MOAISim::Update () {
 	
 	MOAIMainThreadTaskSubscriber::Get ().Publish ();
 	
+	// Meyume
+	if (this->mIgnoreLoopFlags) {
+		if ( this->mLoopState == START ) {
+			this->mLoopState = RUNNING;
+		}
+		
+		// EZRA
+		this->mDeviceTime = ZLDeviceTime::GetTimeInSeconds ();
+		MOAIRenderMgr::Get ().Render ();
+		
+		if ( this->mLoopState != RUNNING ) {
+			this->mTime = this->mDeviceTime;
+			//if ( this->mLoopState == RESUMING ) {
+				//this->mLoopState = RUNNING;
+				
+				this->mActionTree->Update ( 0 );
+				MOAINodeMgr::Get ().Update ();
+				
+				this->mFrameCounter++;
+			//} else {
+				return;
+			//}
+		}
+		
+		//CATCH UP
+		int loopA = 0;
+		#define STEP_LOOP_IMPL()
+		while (  loopA < 1  ) {
+			this->mActionTree->Update ( timerStep );
+			MOAINodeMgr::Get ().Update ();
+			
+			this->mTime += timerStep;
+			this->mFrameCounter++;
+			loopA++;
+			
+			if ( this->mGCActive ) {
+				// crank the garbage collector
+				lua_gc ( state, LUA_GCSTEP, this->mGCStep );
+			}
+		}
+		
+		timerStep = this->mDeviceTime - this->mTime - this->mStep * 2;
+		if( timerStep > this->mStep ) { STEP_LOOP_IMPL (); }
+		timerStep = this->mStep;
+		STEP_LOOP_IMPL ();
+		
+		#ifdef MOAI_OS_ANDROID
+			usleep ( 1000 );
+		#endif
+		
+		#ifndef MOAI_OS_WINDOWS
+			//  Sleep ( 1 );
+		#endif
+		
+		return;
+	}
+	
+
 	// try to account for timer error
 	if ( this->mTimerError != 0.0 ) {
 		
