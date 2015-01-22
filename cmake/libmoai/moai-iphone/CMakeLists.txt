@@ -2,20 +2,22 @@ cmake_minimum_required ( VERSION 2.8.11 )
 project ( moai-ios )
 
 # Extensions
-add_subdirectory(moai-ios-adcolony)
+#add_subdirectory(moai-ios-adcolony)
 add_subdirectory(moai-ios-billing)
-add_subdirectory(moai-ios-chartboost)
-add_subdirectory(moai-ios-crittercism)
-add_subdirectory(moai-ios-facebook)
-add_subdirectory(moai-ios-flurry)
+#add_subdirectory(moai-ios-chartboost)
+#add_subdirectory(moai-ios-crittercism)
+#add_subdirectory(moai-ios-facebook)
+#add_subdirectory(moai-ios-flurry)
 add_subdirectory(moai-ios-gamecenter)
-add_subdirectory(moai-ios-kontagent)
-add_subdirectory(moai-ios-mobile-app-tracker)
-add_subdirectory(moai-ios-playhaven)
-add_subdirectory(moai-ios-tapjoy)
-add_subdirectory(moai-ios-twitter)
-add_subdirectory(moai-ios-urban-airship)
-add_subdirectory(moai-ios-vungle)
+#add_subdirectory(moai-ios-kontagent)
+#add_subdirectory(moai-ios-mobile-app-tracker)
+#add_subdirectory(moai-ios-playhaven)
+#add_subdirectory(moai-ios-tapjoy)
+#add_subdirectory(moai-ios-twitter)
+#add_subdirectory(moai-ios-urban-airship)
+#add_subdirectory(moai-ios-vungle)
+
+add_subdirectory(mym-ios)
 
 
 set ( MOAI_IPHONE_INCLUDES
@@ -37,7 +39,7 @@ file ( GLOB MOAI_IPHONE_SRC
 include_directories ( ${MOAI_IPHONE_INCLUDES} )
 add_library ( moai-ios STATIC ${MOAI_IPHONE_SRC}  )
 
-target_link_libraries ( moai-ios moai-sim moai-util moai-core moai-ios-facebook)
+target_link_libraries ( moai-ios moai-sim moai-util moai-core)
 
 target_include_directories( moai-ios PUBLIC
   "$<BUILD_INTERFACE:${MOAI_IPHONE_INCLUDES}>"
